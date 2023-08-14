@@ -2,6 +2,7 @@ import tkinter as tk
 import Timer
 import Settings
 import ProgressBar
+import RecorderWindow
 from defs import *
 
 
@@ -16,6 +17,14 @@ class display(tk.Tk):
         self.progress_bar = ProgressBar.ProgressBar(self)
         self.color = COLOR_WHITE
         self.bind("<Configure>", self.reposition_ui)
+
+        self.recorderWindow = RecorderWindow.RecorderWindow(self)
+
+    def record_time(self, time_as_string):
+        text_color = COLOR_BLACK if self.color == COLOR_WHITE else self.color
+
+        self.recorderWindow.addEntry(self.settings.get_speaker(), self.settings.get_speech_type(), time_as_string, text_color)
+        self.recorderWindow.draw()
 
     def update_ui(self, count):
         color = self.settings.get_color(count)

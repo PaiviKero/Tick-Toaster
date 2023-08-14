@@ -37,7 +37,7 @@ class Timer:
 
     def stop(self):
         self.interrupt = True
-        self.copy_time()
+        self.record_time()
         self.start_button.configure(text='Start!', command=self.start)
 
     def update_ui(self):
@@ -45,7 +45,7 @@ class Timer:
         self.parent.update_ui(seconds_passed)
         self.update_time()
 
-    def update_time(self):
+    def get_time_string(self):
         if (self.seconds < 10):
             seconds_str = "0" + str(self.seconds)
         else:
@@ -54,10 +54,13 @@ class Timer:
             minutes_str = "0" + str(self.minutes)
         else:
             minutes_str = str(self.minutes)
-        self.time_label['text'] = minutes_str + ":" + seconds_str
+        return minutes_str + ":" + seconds_str
 
-    def copy_time(self):
-        # copy time to clipboard
+    def update_time(self):
+        self.time_label['text'] = self.get_time_string()
+
+    def record_time(self):
+        self.parent.record_time(self.get_time_string())
         return
 
     def reposition_label(self, x, y):

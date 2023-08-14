@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import *
 from defs import *
 
-
 class Settings:
     minutes_to_milliseconds = 60
 
@@ -45,37 +44,37 @@ class Settings:
     def reposition(self, x, y):
         self.button_frame.place(x=x, y=y)
 
+    def select_time_option(self, selected_option):
+        self.set_times(*SPEECH_OPTIONS[selected_option]["color_times"])
+
+    def get_speech_type(self):
+        return SPEECH_OPTIONS[self.clicked.get()]["type"]
+    
+    def get_speaker(self):
+        return self.speaker_entry.get()
+
     def init_ui(self):
         self.button_frame = tk.Frame(self.parent)
         self.button_frame.grid()
-        tk.Label(self.button_frame, text="Change to Green at (min): ").grid(
-            row=2, columnspan=2)
+        tk.Label(self.button_frame, text="Change to Green at (min): ").grid(row=2)
         self.green_entry = tk.Entry(self.button_frame)
         self.green_entry.grid(row=2, column=2)
-        self.green_entry.insert(0, "0.05")
-        tk.Label(self.button_frame, text="Change to Yellow at (min): ").grid(
-            row=3, columnspan=2)
+        tk.Label(self.button_frame, text="Change to Yellow at (min): ").grid(row=3)
         self.yellow_entry = tk.Entry(self.button_frame)
         self.yellow_entry.grid(row=3, column=2)
-        self.yellow_entry.insert(0, "0.1")
-        tk.Label(self.button_frame, text="Change to Red at (min): ").grid(
-            row=4, columnspan=2)
+        tk.Label(self.button_frame, text="Change to Red at (min): ").grid(row=4)
         self.red_entry = tk.Entry(self.button_frame)
         self.red_entry.grid(row=4, column=2)
-        self.red_entry.insert(0, "0.15")
 
-        speech_button = tk.Button(self.button_frame, text="5, 6, 7",
-                                  command=lambda: self.set_times(5, 6, 7))
-        speech_button.grid(column=0, row=0, padx=5, pady=5)
+        tk.Label(self.button_frame, text="Speaker: ").grid(row=1)
+        self.speaker_entry = tk.Entry(self.button_frame)
+        self.speaker_entry.grid(row=1, column=2)
 
-        evaluation_button = tk.Button(
-            self.button_frame, text="2, 2.5, 3", command=lambda: self.set_times(2, 2.5, 3))
-        evaluation_button.grid(column=1, row=0, padx=5, pady=5)
+        self.clicked = StringVar()
+        self.clicked.set(list(SPEECH_OPTIONS.keys())[1])
+        self.select_time_option(self.clicked.get())
+    
+        drop_options = OptionMenu( self.button_frame, self.clicked, *SPEECH_OPTIONS.keys(), command=self.select_time_option)
+        drop_options.grid(column=0, row=0, padx=5, pady=5)
 
-        tabletopics_button = tk.Button(
-            self.button_frame, text="1, 1.5, 2", command=lambda: self.set_times(1, 1.5, 2))
-        tabletopics_button.grid(column=2, row=0, padx=5, pady=5)
 
-        # test_button = tk.Button(
-        #    self.button_frame, text="0.05, 0.1, 0.15", command=lambda: self.set_times(0.05, 0.10, 0.15))
-        # test_button.grid(column=3, row=0, padx=5, pady=5)

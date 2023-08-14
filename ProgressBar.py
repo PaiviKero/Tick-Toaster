@@ -34,13 +34,13 @@ class ProgressBar:
         style = ttk.Style()
         style.theme_use('alt')
         style.configure("blue.Horizontal.TProgressbar",
-                        background='blue', thickness=50)
+                        background=COLOR_BLUE, thickness=50)
         style.configure("green.Horizontal.TProgressbar",
-                        background='green', thickness=50)
+                        background=COLOR_GREEN, thickness=50)
         style.configure("yellow.Horizontal.TProgressbar",
-                        background='yellow', thickness=50)
+                        background=COLOR_YELLOW, thickness=50)
         style.configure("red.Horizontal.TProgressbar",
-                        background='red', thickness=50)
+                        background=COLOR_RED, thickness=50)
         self.progress_bar = ttk.Progressbar(self.bar_frame, orient="horizontal", length=800,
                                             mode="determinate")
         self.progress_bar.config(style='blue.Horizontal.TProgressbar')
