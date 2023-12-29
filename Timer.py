@@ -1,4 +1,4 @@
-import tkinter as tk
+import customtkinter as ctk
 import time
 from defs import *
 
@@ -27,7 +27,8 @@ class Timer:
 
     def start(self):
         self.start_timestamp = time.time()
-        self.start_button.configure(text='Stop', command=self.stop)
+        self.start_button.configure(text='Stop')
+        self.start_button.configure(command=self.stop)
         self.parent.reset_ui()
         self.time_label['text'] = "00:00"
         self.seconds = 0
@@ -38,7 +39,8 @@ class Timer:
     def stop(self):
         self.interrupt = True
         self.record_time()
-        self.start_button.configure(text='Start!', command=self.start)
+        self.start_button.configure(text='Start!')
+        self.start_button.configure(command=self.start)
 
     def update_ui(self):
         seconds_passed = self.minutes*60+self.seconds
@@ -57,7 +59,7 @@ class Timer:
         return minutes_str + ":" + seconds_str
 
     def update_time(self):
-        self.time_label['text'] = self.get_time_string()
+        self.time_label.configure(text = self.get_time_string())
 
     def record_time(self):
         self.parent.record_time(self.get_time_string())
@@ -76,13 +78,13 @@ class Timer:
         self.label['bg'] = color
 
     def init_ui(self):
-        self.label = tk.Label(
-            self.parent, text="Timer", font=("Arial", 75))
+        self.label = ctk.CTkLabel(
+            self.parent, text="Timer", font=("Georgia", 75))
         self.label.grid(column=0, row=1, padx=5, pady=5)
-        self.time_label = tk.Label(
+        self.time_label = ctk.CTkLabel(
             self.parent, text="00:00", font=("Arial", 25))
         self.time_label.grid(column=0, row=0, padx=5, pady=5)
 
-        self.start_button = tk.Button(
+        self.start_button = ctk.CTkButton(
             self.parent, text="Start!", command=self.start)
         self.start_button.grid(column=1, row=6, padx=5, pady=5)

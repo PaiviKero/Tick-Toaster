@@ -2,11 +2,17 @@
 from typing import Final
 
 COLOR_WHITE: Final[str] = 'white'
+COLOR_BASE: Final[str] = 'mint cream'
+COLOR_BASE_SECONDARY: Final[str] = 'azure'
 COLOR_BLACK: Final[str] = 'black'
-COLOR_BLUE: Final[str] = 'blue'
-COLOR_GREEN: Final[str] = 'green'
-COLOR_YELLOW: Final[str] = 'orange'
-COLOR_RED: Final[str] = 'red'
+COLOR_BLUE: Final[str] = 'steelblue'
+COLOR_GREEN: Final[str] = 'DarkSeaGreen'
+COLOR_YELLOW: Final[str] = 'lemon chiffon'
+COLOR_RED: Final[str] = 'salmon'
+
+RECORDER_WINDOW_SIZE: Final[str] = '400x650'
+MAIN_WINDOW_WIDTH: Final[int] = 900
+MAIN_WINDOW_HEIGHT: Final[int] = 500
 
 TIME_TYPES = ["Speech", "Evaluation", "Table Topics"]
 
