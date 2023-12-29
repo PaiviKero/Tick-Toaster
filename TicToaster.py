@@ -48,12 +48,12 @@ class display(ctk.CTk):
     def reposition_ui(self, something):
         width = self.winfo_width()
         height = self.winfo_height()
-        self.progress_bar.reposition(x=(width*1)/20, y=(height*1)/20)
-        self.timer.reposition_label(x=(width*1)/20+20, y=(height*2)/5+self.settings.get_height()/3)
-        self.timer.reposition_counter(x=(width*1)/20+20, y=(height*1)/20+self.progress_bar.get_height()+10)
-        self.timer.reposition_button(x=(width*13)/21, y=(height*2)/5+self.settings.get_height()+10)
-        self.settings.reposition(x=(width*6)/10, y=(height*2)/5)
-        self.save_button.place(x=(width*13)/21+self.timer.get_button_width()+10, y=(height*2)/5+self.settings.get_height()+10)
+        self.progress_bar.reposition(x=(width*1)/21, y=(height*1)/20)
+        self.timer.reposition_label(x=(width*1)/21+20, y=(height*2)/5+self.settings.get_height()/3)
+        self.timer.reposition_counter(x=(width*1)/21+20, y=(height*1)/20+self.progress_bar.get_height()+10)
+        self.timer.reposition_button(x=(width*13)/23, y=(height*2)/5+self.settings.get_height()+10)
+        self.settings.reposition(x=(width*6)/11, y=(height*2)/5)
+        self.save_button.place(x=(width*13)/23+self.timer.get_button_width()+10, y=(height*2)/5+self.settings.get_height()+10)
 
     def reset_ui(self):
         self.progress_bar.set_max(self.settings.get_whole_time())

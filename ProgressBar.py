@@ -17,7 +17,7 @@ class ProgressBar:
         self.whole_time_in_seconds = whole_time_in_minutes
 
     def reposition(self, x, y):
-        self.progress_bar.configure(width=self.parent.winfo_width()-self.parent.winfo_width()/15)
+        self.progress_bar.configure(width=self.parent.winfo_width()-self.parent.winfo_width()/12)
         self.progress_bar.place(x=x, y=y)
 
     def get_height(self):

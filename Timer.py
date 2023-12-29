@@ -17,7 +17,7 @@ class Timer:
             self.start_timestamp - self.minutes*60 - self.seconds
         if (time_passed_since_last_tick > 1):
             self.seconds += 1
-            if (self.seconds > 60):
+            if (self.seconds >= 60):
                 self.seconds = 0
                 self.minutes += 1
             self.update_ui()
