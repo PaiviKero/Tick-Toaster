@@ -26,6 +26,7 @@ class display(ctk.CTk):
     def record_time(self, time_as_string):
         self.recorderWindow.addEntry(self.settings.get_speaker(), self.settings.get_speech_type(), time_as_string, self.color)
         self.recorderWindow.draw()
+        self.settings.clear_speaker()
 
     def update_ui(self, count):
         color = self.settings.get_color(count)

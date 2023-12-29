@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from defs import *
+import os 
 
 class Settings:
     minutes_to_milliseconds = 60
@@ -46,6 +47,14 @@ class Settings:
     def select_time_option(self, selected_option):
         self.set_times(*SPEECH_OPTIONS[selected_option]["color_times"])
 
+    def select_speaker_option(self, selected_option):
+        self.speaker_entry.delete(0, ctk.END)
+        self.speaker_entry.insert(0, selected_option)
+
+    def clear_speaker(self):
+        self.select_speaker_option("")
+        self.clicked_speaker.set("Select speaker")
+
     def get_speech_type(self):
         return SPEECH_OPTIONS[self.clicked.get()]["type"]
     
@@ -58,19 +67,19 @@ class Settings:
     def init_ui(self):
         self.button_frame = ctk.CTkFrame(self.parent, fg_color=COLOR_BASE_SECONDARY)
         self.button_frame.grid()
-        ctk.CTkLabel(self.button_frame, text="Change to Green at (min): ").grid(row=2, padx=(10, 5))
+        ctk.CTkLabel(self.button_frame, text="Change to Green at (min): ").grid(row=2, padx=(10, 0))
         self.green_entry = ctk.CTkEntry(self.button_frame)
-        self.green_entry.grid(row=2, column=2, padx=(0, 10), pady=(0, 5))
-        ctk.CTkLabel(self.button_frame, text="Change to Yellow at (min): ").grid(row=3, padx=(10, 5))
+        self.green_entry.grid(row=2, column=2, padx=(5, 10), pady=(0, 6))
+        ctk.CTkLabel(self.button_frame, text="Change to Yellow at (min): ").grid(row=3, padx=(10, 0))
         self.yellow_entry = ctk.CTkEntry(self.button_frame)
-        self.yellow_entry.grid(row=3, column=2, padx=(0, 10), pady=(0, 5))
-        ctk.CTkLabel(self.button_frame, text="Change to Red at (min): ").grid(row=4, padx=(10, 5))
+        self.yellow_entry.grid(row=3, column=2, padx=(5, 10), pady=(0, 6))
+        ctk.CTkLabel(self.button_frame, text="Change to Red at (min): ").grid(row=4, padx=(10, 0))
         self.red_entry = ctk.CTkEntry(self.button_frame)
-        self.red_entry.grid(row=4, column=2, padx=(0, 10), pady=(0, 5))
+        self.red_entry.grid(row=4, column=2, padx=(5, 10), pady=(0, 6))
 
-        ctk.CTkLabel(self.button_frame, text="Speaker: ").grid(row=1, padx=(10, 5))
+        ctk.CTkLabel(self.button_frame, text="Speaker: ").grid(row=1, padx=(10, 0))
         self.speaker_entry = ctk.CTkEntry(self.button_frame)
-        self.speaker_entry.grid(row=1, column=2, padx=(0, 10), pady=(0, 5))
+        self.speaker_entry.grid(row=1, column=2, padx=(5, 10), pady=(0, 6))
 
         self.clicked = ctk.StringVar()
         self.clicked.set(list(SPEECH_OPTIONS.keys())[1])
@@ -78,5 +87,15 @@ class Settings:
     
         drop_options = ctk.CTkOptionMenu(master=self.button_frame, variable=self.clicked, values=list(SPEECH_OPTIONS.keys()), command=self.select_time_option)
         drop_options.grid(column=0, row=0, padx=5, pady=5)
+
+        cwd = os.getcwd()
+        with open(cwd+'\\Tic-Toaster\\Speakers.txt', encoding='utf-8') as f:
+            speakers = f.read().splitlines()
+
+        self.clicked_speaker = ctk.StringVar()
+        self.clicked_speaker.set("Select speaker")
+    
+        speaker_drop_options = ctk.CTkOptionMenu(master=self.button_frame, variable=self.clicked_speaker, values=speakers, command=self.select_speaker_option)
+        speaker_drop_options.grid(column=2, row=0, pady=5)
 
 
