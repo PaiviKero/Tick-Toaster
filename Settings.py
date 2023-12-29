@@ -109,3 +109,11 @@ class Settings:
         self.speaker_drop_options.grid(column=2, row=0, padx=(5, 0), pady=5)
 
 
+    def get_speech_length(self): 
+        lower_limit = self.get_green_start_time()/Settings.minutes_to_milliseconds
+        upper_limit = self.get_red_start_time()/Settings.minutes_to_milliseconds
+        if(lower_limit.is_integer()):
+            lower_limit = int(lower_limit)
+        if(upper_limit.is_integer()):
+            upper_limit = int(upper_limit)
+        return str(lower_limit)+"-"+str(upper_limit)+" min"
