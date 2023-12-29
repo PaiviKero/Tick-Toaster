@@ -77,6 +77,9 @@ class Timer:
     def change_color(self, color):
         self.label['bg'] = color
 
+    def get_button_width(self):
+        return self.start_button.winfo_width()
+
     def init_ui(self):
         self.label = ctk.CTkLabel(
             self.parent, text="Timer", font=("Georgia", 75))

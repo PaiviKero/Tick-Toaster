@@ -23,6 +23,9 @@ class display(ctk.CTk):
 
         self.recorderWindow = RecorderWindow.RecorderWindow(self)
 
+        self.save_button = ctk.CTkButton(self, text="Save", command=self.recorderWindow.save)
+        self.save_button.grid(column=2, row=6, padx=5, pady=5)
+
     def record_time(self, time_as_string):
         self.recorderWindow.addEntry(self.settings.get_speaker(), self.settings.get_speech_type(), time_as_string, self.color)
         self.recorderWindow.draw()
@@ -48,8 +51,9 @@ class display(ctk.CTk):
         self.progress_bar.reposition(x=(width*1)/20, y=(height*1)/20)
         self.timer.reposition_label(x=(width*1)/20+20, y=(height*2)/5+self.settings.get_height()/3)
         self.timer.reposition_counter(x=(width*1)/20+20, y=(height*1)/20+self.progress_bar.get_height()+10)
-        self.timer.reposition_button(x=(width*13)/20, y=(height*2)/5+self.settings.get_height()+10)
+        self.timer.reposition_button(x=(width*13)/21, y=(height*2)/5+self.settings.get_height()+10)
         self.settings.reposition(x=(width*6)/10, y=(height*2)/5)
+        self.save_button.place(x=(width*13)/21+self.timer.get_button_width()+10, y=(height*2)/5+self.settings.get_height()+10)
 
     def reset_ui(self):
         self.progress_bar.set_max(self.settings.get_whole_time())

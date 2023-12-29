@@ -1,7 +1,15 @@
 import customtkinter as ctk
 from defs import *
 import Table
-from CTkTable import *
+import pyscreenshot as ImageGrab
+import os
+import datetime
+import csv
+from openpyxl import Workbook
+from openpyxl.utils import get_column_letter
+from openpyxl.styles import PatternFill
+from openpyxl.cell import Cell
+from matplotlib import colors
 
 class RecorderWindow(ctk.CTkToplevel):
     def __init__(self, parent):
@@ -33,3 +41,62 @@ class RecorderWindow(ctk.CTkToplevel):
             table_frame.grid(row=row_counter)
             row_counter += 1
             Table.Table(table_frame, self.times[key])
+
+    def grab(self):
+        return ImageGrab.grab(bbox=(self.winfo_x()+10, self.winfo_y(), self.winfo_width()+60,self.winfo_height()))
+
+    def save(self):
+        self.save_image()
+        #self.save_csv()
+        self.save_xlsx()
+
+    def get_file_name(self):
+        date_time_string = datetime.datetime.now().strftime("%B_%d_%Y_%I_%M%p")
+        return 'Timer_Report_'+date_time_string
+
+    def save_image(self):
+        im = self.grab()
+        file_name = self.get_file_name()+'.png'
+        im.save(file_name)
+        os.startfile(file_name)
+
+    def save_csv(self):
+        file_name = self.get_file_name()+'.csv'
+        with open(file_name, 'w', newline='', encoding='utf-8') as file:
+            writer = csv.writer(file)
+            field = ["Type", "Speaker", "Time"]
+            
+            writer.writerow(field)
+            for key in self.times.keys():
+                writer.writerow([key, "", ""])
+                content_row = self.times[key]
+                for speaker in content_row:
+                    writer.writerow(["", speaker, content_row[speaker]["time"]])
+        os.startfile(file_name)
+    
+    def save_xlsx(self):
+        wb = Workbook()
+        worksheet = wb.active
+
+        worksheet.append(["Type", "Speaker", "Time"]);
+        for key in self.times.keys():
+            worksheet.append([key, "", ""])
+            content_row = self.times[key]
+            for speaker in content_row:
+                time_cell = Cell(worksheet, value=content_row[speaker]["time"])
+                hex_color = colors.cnames[content_row[speaker]["color"].lower().replace(" ", "")].replace("#", "FF")
+                time_cell.fill = PatternFill(start_color=hex_color, end_color=hex_color, fill_type = "solid")
+                worksheet.append(["", speaker, time_cell])
+
+        dims = {}
+        for row in worksheet.rows:
+            for cell in row:
+                if cell.value:
+                    dims[cell.column_letter] = max((dims.get(cell.column_letter, 0), len(str(cell.value))))  
+        for col, value in dims.items():
+            worksheet.column_dimensions[col].width = value
+
+        file_name = self.get_file_name()+'.xlsx'
+        wb.save(file_name)
+        os.startfile(file_name)
+    
