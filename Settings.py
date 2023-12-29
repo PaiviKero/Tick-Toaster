@@ -61,6 +61,14 @@ class Settings:
     def get_speaker(self):
         return self.speaker_entry.get()
     
+    def add_speaker(self):
+        new_speaker = self.get_speaker()
+        self.speakers.append(new_speaker)
+        self.speaker_drop_options.configure(values=self.speakers)
+        cwd = os.getcwd()
+        with open(cwd+SPEAKER_FILE, "a", encoding='utf-8') as f:
+            f.write('\n'+new_speaker)
+
     def get_height(self):
         return self.button_frame.winfo_height()
 
@@ -69,17 +77,19 @@ class Settings:
         self.button_frame.grid()
         ctk.CTkLabel(self.button_frame, text="Change to Green at (min): ").grid(row=2, padx=(10, 0))
         self.green_entry = ctk.CTkEntry(self.button_frame)
-        self.green_entry.grid(row=2, column=2, padx=(5, 10), pady=(0, 6))
+        self.green_entry.grid(row=2, column=2, padx=(5, 0), pady=(0, 6))
         ctk.CTkLabel(self.button_frame, text="Change to Yellow at (min): ").grid(row=3, padx=(10, 0))
         self.yellow_entry = ctk.CTkEntry(self.button_frame)
-        self.yellow_entry.grid(row=3, column=2, padx=(5, 10), pady=(0, 6))
+        self.yellow_entry.grid(row=3, column=2, padx=(5, 0), pady=(0, 6))
         ctk.CTkLabel(self.button_frame, text="Change to Red at (min): ").grid(row=4, padx=(10, 0))
         self.red_entry = ctk.CTkEntry(self.button_frame)
-        self.red_entry.grid(row=4, column=2, padx=(5, 10), pady=(0, 6))
+        self.red_entry.grid(row=4, column=2, padx=(5, 0), pady=(0, 6))
 
         ctk.CTkLabel(self.button_frame, text="Speaker: ").grid(row=1, padx=(10, 0))
         self.speaker_entry = ctk.CTkEntry(self.button_frame)
-        self.speaker_entry.grid(row=1, column=2, padx=(5, 10), pady=(0, 6))
+        self.speaker_entry.grid(row=1, column=2, padx=(5, 0), pady=(0, 6))
+
+        ctk.CTkButton(self.button_frame, text="+", command=self.add_speaker, width=20).grid(row=1, column=3, padx=(5, 10), pady=(0, 6))
 
         self.clicked = ctk.StringVar()
         self.clicked.set(list(SPEECH_OPTIONS.keys())[1])
@@ -89,13 +99,13 @@ class Settings:
         drop_options.grid(column=0, row=0, padx=5, pady=5)
 
         cwd = os.getcwd()
-        with open(cwd+'\\Tic-Toaster\\Speakers.txt', encoding='utf-8') as f:
-            speakers = f.read().splitlines()
+        with open(cwd+SPEAKER_FILE, encoding='utf-8') as f:
+            self.speakers = f.read().splitlines()
 
         self.clicked_speaker = ctk.StringVar()
         self.clicked_speaker.set("Select speaker")
     
-        speaker_drop_options = ctk.CTkOptionMenu(master=self.button_frame, variable=self.clicked_speaker, values=speakers, command=self.select_speaker_option)
-        speaker_drop_options.grid(column=2, row=0, pady=5)
+        self.speaker_drop_options = ctk.CTkOptionMenu(master=self.button_frame, variable=self.clicked_speaker, values=self.speakers, command=self.select_speaker_option)
+        self.speaker_drop_options.grid(column=2, row=0, padx=(5, 0), pady=5)
 
 
