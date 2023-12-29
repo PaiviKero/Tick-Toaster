@@ -10,7 +10,7 @@ class RecorderWindow(ctk.CTkToplevel):
         self.times = {key: {} for key in TIME_TYPES}
         self.configure(fg_color=COLOR_BASE_SECONDARY)
 
-        self.geometry(RECORDER_WINDOW_SIZE)
+        self.geometry(str(RECORDER_WINDOW_WIDTH)+"x"+str(RECORDER_WINDOW_HEIGHT)+"+"+str(RECORDER_WINDOW_START_X)+"+"+str(RECORDER_WINDOW_START_Y))
         self.title('Recorder Window')        
         self.tables_frame = ctk.CTkFrame(self, fg_color=COLOR_BASE_SECONDARY)
         self.tables_frame.grid()

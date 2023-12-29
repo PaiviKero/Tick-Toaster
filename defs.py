@@ -10,9 +10,14 @@ COLOR_GREEN: Final[str] = 'DarkSeaGreen'
 COLOR_YELLOW: Final[str] = 'lemon chiffon'
 COLOR_RED: Final[str] = 'salmon'
 
-RECORDER_WINDOW_SIZE: Final[str] = '400x650'
+RECORDER_WINDOW_WIDTH: Final[int] = 400
+RECORDER_WINDOW_HEIGHT: Final[int] = 650
+RECORDER_WINDOW_START_X: Final[int] = 50
+RECORDER_WINDOW_START_Y: Final[int] = 50
 MAIN_WINDOW_WIDTH: Final[int] = 900
 MAIN_WINDOW_HEIGHT: Final[int] = 500
+MAIN_WINDOW_START_X: Final[int] = RECORDER_WINDOW_START_X
+MAIN_WINDOW_START_Y: Final[int] = RECORDER_WINDOW_HEIGHT+2*RECORDER_WINDOW_START_Y
 
 TIME_TYPES = ["Speech", "Evaluation", "Table Topics"]
 
