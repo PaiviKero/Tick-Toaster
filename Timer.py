@@ -41,6 +41,7 @@ class Timer:
         self.record_time()
         self.start_button.configure(text='Start!')
         self.start_button.configure(command=self.start)
+        self.parent.change_color(COLOR_BASE)
 
     def update_ui(self):
         seconds_passed = self.minutes*60+self.seconds
