@@ -12,7 +12,7 @@ class display(ctk.CTk):
 
     def __init__(self):
         ctk.CTk.__init__(self)
-        self.title("Tic-Toaster")
+        self.title("Tick-Toaster")
         self.geometry(str(MAIN_WINDOW_WIDTH)+"x"+str(MAIN_WINDOW_HEIGHT)+"+"+str(MAIN_WINDOW_START_X)+"+"+str(MAIN_WINDOW_START_Y))
         self.timer = Timer.Timer(self)
         self.settings = Settings.Settings(self)

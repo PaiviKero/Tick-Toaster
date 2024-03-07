@@ -20,7 +20,7 @@ MAIN_WINDOW_START_X: Final[int] = RECORDER_WINDOW_START_X
 MAIN_WINDOW_START_Y: Final[int] = RECORDER_WINDOW_HEIGHT+2*RECORDER_WINDOW_START_Y
 
 TIME_TYPES = ["Speech", "Evaluation", "Table Topics"]
-SPEAKER_FILE: Final[str] = '\\Tic-Toaster\\Speakers.txt'
+SPEAKER_FILE: Final[str] = '\\Tick-Toaster\\Speakers.txt'
 
 SPEECH_OPTIONS = {
     "Ice-Breaker": {
