@@ -27,7 +27,7 @@ class display(ctk.CTk):
         self.save_button.grid(column=2, row=6, padx=5, pady=5)
 
     def record_time(self, time_as_string):
-        self.recorderWindow.addEntry(self.settings.get_speaker(), self.settings.get_speech_type(), self.settings.get_speech_length(), time_as_string, self.color)
+        self.recorderWindow.add_entry(self.settings.get_speaker(), self.settings.get_speech_type(), self.settings.get_speech_length(), time_as_string, self.color)
         self.recorderWindow.draw()
         self.settings.clear_speaker()
 

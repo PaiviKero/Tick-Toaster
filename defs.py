@@ -10,7 +10,7 @@ COLOR_GREEN: Final[str] = 'DarkSeaGreen'
 COLOR_YELLOW: Final[str] = 'lemon chiffon'
 COLOR_RED: Final[str] = 'salmon'
 
-RECORDER_WINDOW_WIDTH: Final[int] = 400
+RECORDER_WINDOW_WIDTH: Final[int] = 430
 RECORDER_WINDOW_HEIGHT: Final[int] = 750
 RECORDER_WINDOW_START_X: Final[int] = 50
 RECORDER_WINDOW_START_Y: Final[int] = 50

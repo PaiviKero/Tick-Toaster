@@ -23,7 +23,7 @@ class RecorderWindow(ctk.CTkToplevel):
         self.tables_frame = ctk.CTkFrame(self, fg_color=COLOR_BASE_SECONDARY)
         self.tables_frame.grid()
 
-    def addEntry(self, name, type, speech_length, time_in_milliseconds, color):
+    def add_entry(self, name, type, speech_length, time_in_milliseconds, color):
         counter = 0
         for speaker in self.times[type]:
             speaker_stripped_of_digits = ''.join([i for i in speaker if not i.isdigit()])
@@ -52,7 +52,7 @@ class RecorderWindow(ctk.CTkToplevel):
                 table_frame = ctk.CTkFrame(self.tables_frame, height=10, fg_color=COLOR_BASE_SECONDARY)
                 table_frame.grid(row=row_counter)
                 row_counter += 1
-                Table.Table(table_frame, self.times[key])
+                Table.Table(table_frame, self.times[key], self.delete_entry, key)
 
     def grab(self):
         return ImageGrab.grab(bbox=(self.winfo_x()+8, self.winfo_y(), self.winfo_width()+62,self.winfo_height()+80))
@@ -61,6 +61,10 @@ class RecorderWindow(ctk.CTkToplevel):
         self.save_image()
         #self.save_csv()
         self.save_xlsx()
+
+    def delete_entry(self, entry_type, entry_key):
+        del self.times[entry_type][entry_key]
+        self.draw()
 
     def get_file_name(self):
         date_time_string = datetime.datetime.now().strftime("%B_%d_%Y_%I_%M%p")
