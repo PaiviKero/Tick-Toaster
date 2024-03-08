@@ -19,7 +19,8 @@ MAIN_WINDOW_HEIGHT: Final[int] = 500
 MAIN_WINDOW_START_X: Final[int] = RECORDER_WINDOW_START_X
 MAIN_WINDOW_START_Y: Final[int] = RECORDER_WINDOW_HEIGHT+2*RECORDER_WINDOW_START_Y
 
-TIME_TYPES = ["Speech", "Evaluation", "Table Topics"]
+TIME_TYPES = ["Speech", "Evaluation", "Table Topics", "Break"]
+LOGGED_TIME_TYPES = ["Speech", "Evaluation", "Table Topics"]
 SPEAKER_FILE: Final[str] = '\\Tick-Toaster\\Speakers.txt'
 
 SPEECH_OPTIONS = {
@@ -42,6 +43,10 @@ SPEECH_OPTIONS = {
     "Table Topics": {
         "type": TIME_TYPES[2],
         "color_times":  [1, 1.5, 2]
+    },
+    "1 Minute Break": {
+        "type": TIME_TYPES[3],
+        "color_times":  [0.5, 0.75, 1]
     },
     "Test": {
         "type": TIME_TYPES[0],

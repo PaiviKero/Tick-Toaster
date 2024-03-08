@@ -36,12 +36,13 @@ class RecorderWindow(ctk.CTkToplevel):
         self.tables_frame.grid()
         row_counter = 0
         for key in self.times.keys():
-            ctk.CTkLabel(self.tables_frame, text=key, font=('Arial',16)).grid(row=row_counter)
-            row_counter += 1
-            table_frame = ctk.CTkFrame(self.tables_frame, height=10, fg_color=COLOR_BASE_SECONDARY)
-            table_frame.grid(row=row_counter)
-            row_counter += 1
-            Table.Table(table_frame, self.times[key])
+            if(key in LOGGED_TIME_TYPES):
+                ctk.CTkLabel(self.tables_frame, text=key, font=('Arial',16)).grid(row=row_counter)
+                row_counter += 1
+                table_frame = ctk.CTkFrame(self.tables_frame, height=10, fg_color=COLOR_BASE_SECONDARY)
+                table_frame.grid(row=row_counter)
+                row_counter += 1
+                Table.Table(table_frame, self.times[key])
 
     def grab(self):
         return ImageGrab.grab(bbox=(self.winfo_x()+8, self.winfo_y(), self.winfo_width()+62,self.winfo_height()+80))
