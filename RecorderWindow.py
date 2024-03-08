@@ -24,7 +24,17 @@ class RecorderWindow(ctk.CTkToplevel):
         self.tables_frame.grid()
 
     def addEntry(self, name, type, speech_length, time_in_milliseconds, color):
-        self.times[type][name] = {
+        counter = 0
+        for speaker in self.times[type]:
+            speaker_stripped_of_digits = ''.join([i for i in speaker if not i.isdigit()])
+            if(len(speaker_stripped_of_digits) < len(speaker)):
+                speaker_stripped_of_digits = speaker_stripped_of_digits[:-1]
+            if(speaker_stripped_of_digits == name):
+                counter += 1
+        save_name = name
+        if(counter > 0):
+            save_name += " " + str(counter + 1)
+        self.times[type][save_name] = {
             "length": speech_length,
             "time": time_in_milliseconds,
             "color": color
