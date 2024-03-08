@@ -81,6 +81,12 @@ class Timer:
     def get_button_width(self):
         return self.start_button.winfo_width()
 
+    def get_counter_width(self):
+        return self.time_label.winfo_width()
+    
+    def get_label_height(self):
+        return self.label.winfo_height()
+
     def init_ui(self):
         self.label = ctk.CTkLabel(
             self.parent, text="Timer", font=("Georgia", 75))

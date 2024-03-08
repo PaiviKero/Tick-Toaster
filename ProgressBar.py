@@ -23,6 +23,9 @@ class ProgressBar:
     def get_height(self):
         return self.progress_bar.winfo_height()
     
+    def get_width(self):
+        return self.progress_bar.winfo_width()
+    
     def init_ui(self):
         self.progress_bar = ctk.CTkProgressBar(master=self.parent, height=70, border_width=10, border_color=COLOR_BASE_SECONDARY)
         self.progress_bar.configure(progress_color=COLOR_BLUE)
