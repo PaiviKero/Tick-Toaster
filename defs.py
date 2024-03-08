@@ -19,37 +19,51 @@ MAIN_WINDOW_HEIGHT: Final[int] = 500
 MAIN_WINDOW_START_X: Final[int] = RECORDER_WINDOW_START_X
 MAIN_WINDOW_START_Y: Final[int] = RECORDER_WINDOW_HEIGHT+2*RECORDER_WINDOW_START_Y
 
-TIME_TYPES = ["Speech", "Evaluation", "Table Topics", "Break"]
-LOGGED_TIME_TYPES = ["Speech", "Evaluation", "Table Topics"]
+TYPE_SPEECH = "Speech"
+TYPE_EVALUATION = "Evaluation"
+TYPE_TABLE_TOPICS = "Table Topics"
+TYPE_TABLE_TOPICS_EVALUATION = "Table Topics Evaluation"
+TYPE_NON_TIMED_BREAK = "Break"
+
+TIME_TYPES = [TYPE_SPEECH, TYPE_EVALUATION, TYPE_TABLE_TOPICS, TYPE_TABLE_TOPICS_EVALUATION, TYPE_NON_TIMED_BREAK]
+LOGGED_TIME_TYPES = [TYPE_SPEECH, TYPE_EVALUATION, TYPE_TABLE_TOPICS, TYPE_TABLE_TOPICS_EVALUATION]
 SPEAKER_FILE: Final[str] = '\\Tick-Toaster\\Speakers.txt'
 
 SPEECH_OPTIONS = {
     "Ice-Breaker": {
-        "type": TIME_TYPES[0],
+        "type": TYPE_SPEECH,
         "color_times": [4, 5, 6]
     },
     "Speech 5-7min": {
-        "type": TIME_TYPES[0],
+        "type": TYPE_SPEECH,
         "color_times":  [5, 6, 7]
     },
     "Speech 10-12min": {
-        "type": TIME_TYPES[0],
+        "type": TYPE_SPEECH,
         "color_times":  [10, 11, 12]
     }, 
     "Evaluation": {
-        "type": TIME_TYPES[1],
+        "type": TYPE_EVALUATION,
         "color_times":  [2, 2.5, 3]
     }, 
     "Table Topics": {
-        "type": TIME_TYPES[2],
+        "type": TYPE_TABLE_TOPICS,
         "color_times":  [1, 1.5, 2]
     },
+    "Table Topics Evaluation": {
+        "type": TYPE_TABLE_TOPICS_EVALUATION,
+        "color_times":  [3, 3.5, 4]
+    }, 
     "1 Minute Break": {
-        "type": TIME_TYPES[3],
+        "type": TYPE_NON_TIMED_BREAK,
         "color_times":  [0.5, 0.75, 1]
     },
-    "Test": {
-        "type": TIME_TYPES[0],
+    "Test Speech": {
+        "type": TYPE_SPEECH,
         "color_times":  [0.05, 0.10, 0.15]
+    },
+    "Test Evaluation": {
+        "type": TYPE_EVALUATION,
+        "color_times":  [0.02, 0.04, 0.08]
     }
 }
