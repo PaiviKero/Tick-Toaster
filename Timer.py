@@ -90,5 +90,5 @@ class Timer:
         self.time_label.grid(column=0, row=0, padx=5, pady=5)
 
         self.start_button = ctk.CTkButton(
-            self.parent, text="Start!", command=self.start)
+            self.parent.controlWindow, text="Start!", command=self.start)
         self.start_button.grid(column=1, row=6, padx=5, pady=5)

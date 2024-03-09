@@ -41,14 +41,16 @@ class RecorderWindow(ctk.CTkToplevel):
         self.tables_frame.grid()
         row_counter = 0
         self.save_button = ctk.CTkButton(master=self.tables_frame, width=100, text="Save manually made changes", command=self.save_changes)
-        self.save_button.grid(row=row_counter, padx=(5,0), pady=(0,5))
+        self.save_button.grid(row=row_counter, column=0, padx=(5,0), pady=(0,5))
+        self.export_button = ctk.CTkButton(master=self.tables_frame, text="Export logs to file", command=self.save)
+        self.export_button.grid(row=row_counter, column=1, padx=(5,0), pady=(0,5))
         row_counter += 1
         for key in self.times.keys():
             if(key in LOGGED_TIME_TYPES):
-                ctk.CTkLabel(self.tables_frame, text=key, font=('Arial',16)).grid(row=row_counter)
+                ctk.CTkLabel(self.tables_frame, text=key, font=('Arial',16)).grid(row=row_counter, columnspan=2)
                 row_counter += 1
                 table_frame = ctk.CTkFrame(self.tables_frame, height=10, fg_color=COLOR_BASE_SECONDARY)
-                table_frame.grid(row=row_counter)
+                table_frame.grid(row=row_counter, columnspan=2)
                 row_counter += 1
                 Table.Table(table_frame, self.times[key], self.delete_entry, key)
 

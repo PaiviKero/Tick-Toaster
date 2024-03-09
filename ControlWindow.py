@@ -2,11 +2,18 @@ import customtkinter as ctk
 from defs import *
 import os 
 
-class Settings:
+class ControlWindow(ctk.CTkToplevel):
     minutes_to_milliseconds = 60
 
     def __init__(self, parent):
-        self.parent = parent
+        super().__init__(parent)
+        self.configure(fg_color=COLOR_BASE_SECONDARY)
+
+        self.geometry(str(CONTROL_WINDOW_WIDTH)+"x"+str(CONTROL_WINDOW_HEIGHT)+"+"+str(CONTROL_WINDOW_START_X)+"+"+str(CONTROL_WINDOW_START_Y))
+        self.title('Controls')        
+        self.tables_frame = ctk.CTkFrame(self, fg_color=COLOR_BASE_SECONDARY)
+        self.tables_frame.grid()
+
         self.init_ui()
 
     def set_times(self, green, yellow, red):
@@ -21,16 +28,16 @@ class Settings:
         self.red_entry.insert(0, red)
 
     def get_whole_time(self):
-        return self.get_red_start_time()+0.5*Settings.minutes_to_milliseconds
+        return self.get_red_start_time()+0.5*ControlWindow.minutes_to_milliseconds
 
     def get_green_start_time(self):
-        return int(float(self.green_entry.get())*Settings.minutes_to_milliseconds)
+        return int(float(self.green_entry.get())*ControlWindow.minutes_to_milliseconds)
 
     def get_red_start_time(self):
-        return int(float(self.red_entry.get())*Settings.minutes_to_milliseconds)
+        return int(float(self.red_entry.get())*ControlWindow.minutes_to_milliseconds)
 
     def get_yellow_start_time(self):
-        return int(float(self.yellow_entry.get())*Settings.minutes_to_milliseconds)
+        return int(float(self.yellow_entry.get())*ControlWindow.minutes_to_milliseconds)
 
     def get_color(self, count):
         if count >= self.get_red_start_time():
@@ -73,7 +80,7 @@ class Settings:
         return self.button_frame.winfo_height()
 
     def init_ui(self):
-        self.button_frame = ctk.CTkFrame(self.parent, fg_color=COLOR_BASE_SECONDARY)
+        self.button_frame = ctk.CTkFrame(self, fg_color=COLOR_BASE_SECONDARY)
         self.button_frame.grid()
         ctk.CTkLabel(self.button_frame, text="Change to Green at (min): ").grid(row=2, padx=(10, 0))
         self.green_entry = ctk.CTkEntry(self.button_frame)
@@ -110,8 +117,8 @@ class Settings:
 
 
     def get_speech_length(self): 
-        lower_limit = self.get_green_start_time()/Settings.minutes_to_milliseconds
-        upper_limit = self.get_red_start_time()/Settings.minutes_to_milliseconds
+        lower_limit = self.get_green_start_time()/ControlWindow.minutes_to_milliseconds
+        upper_limit = self.get_red_start_time()/ControlWindow.minutes_to_milliseconds
         if(lower_limit.is_integer()):
             lower_limit = int(lower_limit)
         if(upper_limit.is_integer()):
