@@ -25,16 +25,9 @@ class RecorderWindow(ctk.CTkToplevel):
 
     def add_entry(self, name, type, speech_length, time_in_milliseconds, color):
         counter = 0
-        for speaker in self.times[type]:
-            speaker_stripped_of_digits = ''.join([i for i in speaker if not i.isdigit()])
-            if(len(speaker_stripped_of_digits) < len(speaker)):
-                speaker_stripped_of_digits = speaker_stripped_of_digits[:-1]
-            if(speaker_stripped_of_digits == name):
-                counter += 1
-        save_name = name
-        if(counter > 0):
-            save_name += " " + str(counter + 1)
-        self.times[type][save_name] = {
+
+        self.times[type][len(self.times[type])] = {
+            "speaker": name,
             "length": speech_length,
             "time": time_in_milliseconds,
             "color": color
@@ -45,6 +38,9 @@ class RecorderWindow(ctk.CTkToplevel):
         self.tables_frame = ctk.CTkFrame(self, fg_color=COLOR_BASE_SECONDARY)
         self.tables_frame.grid()
         row_counter = 0
+        self.save_button = ctk.CTkButton(master=self.tables_frame, width=100, text="Save manually made changes", command=self.save_changes)
+        self.save_button.grid(row=row_counter, padx=(5,0), pady=(0,5))
+        row_counter += 1
         for key in self.times.keys():
             if(key in LOGGED_TIME_TYPES):
                 ctk.CTkLabel(self.tables_frame, text=key, font=('Arial',16)).grid(row=row_counter)
@@ -55,8 +51,38 @@ class RecorderWindow(ctk.CTkToplevel):
                 Table.Table(table_frame, self.times[key], self.delete_entry, key)
 
     def grab(self):
-        return ImageGrab.grab(bbox=(self.winfo_x()+8, self.winfo_y(), self.winfo_width()+62,self.winfo_height()+80))
+        return ImageGrab.grab(bbox=(self.winfo_x()+8, self.winfo_y(), self.winfo_width()+58,self.winfo_height()+80))
 
+    def save_changes(self):
+        last_label = None
+        for widget in self.tables_frame.winfo_children():
+            if(isinstance(widget, ctk.CTkLabel)):
+                last_label = widget.cget("text")
+            if(isinstance(widget, ctk.CTkFrame)):
+                counter = 0
+                key_index = None
+                speaker = None
+                speech_length = None
+                speech_time = None 
+                for child_widget in widget.winfo_children():
+                    if(isinstance(child_widget, ctk.CTkEntry)):
+                        entry_text = child_widget.get()
+                        if(counter == 0):
+                            key_index = entry_text
+                        if(counter == 1):
+                            speaker = entry_text
+                        if(counter == 2):
+                            speech_length = entry_text
+                        if(counter == 3):
+                            speech_time = entry_text
+                        counter += 1
+                    if(isinstance(child_widget, ctk.CTkButton)):
+                        counter = 0
+                        if(last_label and speaker and key_index):
+                            self.times[last_label][int(key_index)]["speaker"] = speaker
+                            self.times[last_label][int(key_index)]["length"] = speech_length
+                            self.times[last_label][int(key_index)]["time"] = speech_time
+                            
     def save(self):
         self.save_image()
         #self.save_csv()
@@ -92,10 +118,11 @@ class RecorderWindow(ctk.CTkToplevel):
             
             writer.writerow(field)
             for key in self.times.keys():
-                writer.writerow([key, "", ""])
-                content_row = self.times[key]
-                for speaker in content_row:
-                    writer.writerow(["", speaker, content_row[speaker]["length"], content_row[speaker]["time"]])
+                if(key in LOGGED_TIME_TYPES):
+                    writer.writerow([key, "", ""])
+                    content_row = self.times[key]
+                    for key_index in content_row:
+                        writer.writerow(["", content_row[key_index]["speaker"], content_row[key_index]["length"], content_row[key_index]["time"]])
         os.startfile(file_name)
     
     def save_xlsx(self):
@@ -104,13 +131,14 @@ class RecorderWindow(ctk.CTkToplevel):
 
         worksheet.append(["Type", "Speaker", "Length", "Time"]);
         for key in self.times.keys():
-            worksheet.append([key, "", ""])
-            content_row = self.times[key]
-            for speaker in content_row:
-                time_cell = Cell(worksheet, value=content_row[speaker]["time"])
-                hex_color = colors.cnames[content_row[speaker]["color"].lower().replace(" ", "")].replace("#", "FF")
-                time_cell.fill = PatternFill(start_color=hex_color, end_color=hex_color, fill_type = "solid")
-                worksheet.append(["", speaker, content_row[speaker]["length"], time_cell])
+            if(key in LOGGED_TIME_TYPES):
+                worksheet.append([key, "", ""])
+                content_row = self.times[key]
+                for key_index in content_row:
+                    time_cell = Cell(worksheet, value=content_row[key_index]["time"])
+                    hex_color = colors.cnames[content_row[key_index]["color"].lower().replace(" ", "")].replace("#", "FF")
+                    time_cell.fill = PatternFill(start_color=hex_color, end_color=hex_color, fill_type = "solid")
+                    worksheet.append(["", content_row[key_index]["speaker"], content_row[key_index]["length"], time_cell])
 
         dims = {}
         for row in worksheet.rows:
