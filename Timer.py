@@ -86,7 +86,7 @@ class Timer:
             self.parent, text="Timer", font=("Georgia", 75))
         self.label.grid(column=0, row=1, padx=5, pady=5)
         self.time_label = ctk.CTkLabel(
-            self.parent, text="00:00", font=("Arial", 25))
+            self.parent, text="00:00", font=("Arial", 35))
         self.time_label.grid(column=0, row=0, padx=5, pady=5)
 
         self.start_button = ctk.CTkButton(
