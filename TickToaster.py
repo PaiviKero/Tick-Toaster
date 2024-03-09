@@ -36,10 +36,10 @@ class display(ctk.CTk):
         if (color != self.color):
             self.color = color
             self.change_color(color)
-            progress_bar_color = color
-            if (progress_bar_color == COLOR_BASE):
-                progress_bar_color = COLOR_BLUE
-            self.progress_bar.update_progress_bar(count, progress_bar_color)
+        progress_bar_color = color
+        if (progress_bar_color == COLOR_BASE):
+            progress_bar_color = COLOR_BLUE
+        self.progress_bar.update_progress_bar(count, progress_bar_color)
 
     def change_color(self, color):
         self.configure(fg_color=color)
