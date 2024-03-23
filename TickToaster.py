@@ -1,8 +1,10 @@
 import customtkinter as ctk
+import tkinter
 import Timer
 import ControlWindow
 import ProgressBar
 import RecorderWindow
+import WebCam
 from defs import *
 
 ctk.set_appearance_mode("System")  # Modes: system (default), light, dark
@@ -15,6 +17,10 @@ class display(ctk.CTk):
         self.title("Tick-Toaster")
         self.geometry(str(MAIN_WINDOW_WIDTH)+"x"+str(MAIN_WINDOW_HEIGHT)+"+"+str(MAIN_WINDOW_START_X)+"+"+str(MAIN_WINDOW_START_Y))
 
+        self.campanel = tkinter.Label(self) 
+        self.campanel.grid(column=1, row=0, padx=5, pady=5)
+        self.webCam = WebCam.WebCam(self, self.campanel)
+
         self.recorderWindow = RecorderWindow.RecorderWindow(self)
         self.controlWindow = ControlWindow.ControlWindow(self)
         
@@ -23,7 +29,7 @@ class display(ctk.CTk):
         self.color=COLOR_BASE
         self.configure(fg_color=self.color)
         self.bind("<Configure>", self.reposition_ui)
-
+        
 
     def record_time(self, time_as_string):
         self.recorderWindow.add_entry(self.controlWindow.get_speaker(), self.controlWindow.get_speech_type(), self.controlWindow.get_speech_length(), time_as_string, self.color)
@@ -51,7 +57,8 @@ class display(ctk.CTk):
         self.timer.reposition_label(x=(width*1)/21+20, y=(height*2)/5+self.controlWindow.get_height()/3)
         self.timer.reposition_counter(x=(width*1)/21+20, y=(height*1)/20+self.progress_bar.get_height()+10)
         self.controlWindow.reposition(x=10, y=10)
-        self.timer.reposition_button(x=10, y=self.controlWindow.get_height()+20)
+        self.timer.reposition_button(x=10, y=self.controlWindow.get_height()-20)
+        self.campanel.place(x=(width)/2, y=(height)/4)
 
     def reset_ui(self):
         self.progress_bar.set_max(self.controlWindow.get_whole_time())

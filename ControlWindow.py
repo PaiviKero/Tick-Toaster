@@ -6,6 +6,7 @@ class ControlWindow(ctk.CTkToplevel):
     minutes_to_milliseconds = 60
 
     def __init__(self, parent):
+        self.parent = parent
         super().__init__(parent)
         self.configure(fg_color=COLOR_BASE_SECONDARY)
 
@@ -114,6 +115,9 @@ class ControlWindow(ctk.CTkToplevel):
     
         self.speaker_drop_options = ctk.CTkOptionMenu(master=self.button_frame, variable=self.clicked_speaker, values=self.speakers, command=self.select_speaker_option)
         self.speaker_drop_options.grid(column=2, row=0, padx=(5, 0), pady=5)
+
+        self.stop_cam_button = ctk.CTkButton(master=self.button_frame, text="Stop WebCamp", command=self.parent.webCam.release)
+        self.stop_cam_button.grid(column=1, columnspan=2, row=5, padx=5, pady=5)
 
 
     def get_speech_length(self): 
